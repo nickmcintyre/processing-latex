@@ -1,3 +1,5 @@
+package latex;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -28,6 +30,19 @@ import org.scilab.forge.jlatexmath.greek.GreekRegistration;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
+
+/**
+ * ##library.name##
+ * ##library.sentence##
+ * ##library.url##
+ *
+ * 
+ * @author      ##author##
+ * @modified    ##date##
+ * @version     ##library.prettyVersion## (##library.version##)
+ *
+ * @example SimpleExample
+ */
 public class Convert {
 
     public static final int PDF = 0;

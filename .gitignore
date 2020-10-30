@@ -1,0 +1,7 @@
+.DS_Store
+bin
+tmp
+distribution
+.classpath
+.project
+
