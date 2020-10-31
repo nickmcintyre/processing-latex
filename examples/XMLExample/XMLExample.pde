@@ -1,14 +1,3 @@
-# processing-latex
-**Beautiful typesetting with Processing.**
-
-- Thin wrapper around [JLaTeXMath](https://github.com/opencollab/jlatexmath).
-- Works in Python mode.
-- Still early days. Things will break.
-
-## Example
-The following example converts a LaTeX string to a `PShape` object, then displays it.
-
-```java
 import latex.*;
 
 void setup() {
@@ -24,7 +13,8 @@ void setup() {
   latex += "\\hline";
   latex += "\\end{array}";
   
-  PShape formula = PTeX.toPShape(latex);
+  XML svg = PTeX.toXML(latex);
+  saveXML(svg, "example.svg");
+  PShape formula = loadShape("example.svg");
   shape(formula, 0, 0);
 }
-```

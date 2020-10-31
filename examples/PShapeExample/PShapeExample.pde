@@ -1,17 +1,8 @@
 import latex.*;
-import java.io.IOException;
-
-PShape tex;
 
 void setup() {
   size(680, 163);
   
-  generateSVG();
-  tex = loadShape("Example5_shaped.svg");
-  shape(tex, 0, 0);
-}
-
-void generateSVG() {
   String latex = "\\begin{array}{|c|l|||r|c|}";
   latex += "\\hline";
   latex += "\\text{Matrix}&\\multicolumn{2}{|c|}{\\text{Multicolumns}}&\\text{Font sizes commands}\\cr";
@@ -21,11 +12,7 @@ void generateSVG() {
   latex += "\\multicolumn{4}{|c|}{\\Huge \\text{Huge Multicolumns}}\\cr";
   latex += "\\hline";
   latex += "\\end{array}";
-  println(latex);
-  try {
-    Convert.toSVG(latex, dataPath("Example5.svg"), false);
-    Convert.toSVG(latex, dataPath("Example5_shaped.svg"), true);
-  } catch (IOException ex) {
-    throw new RuntimeException(ex);
-  }
+  
+  PShape formula = PTeX.toPShape(latex);
+  shape(formula, 0, 0);
 }

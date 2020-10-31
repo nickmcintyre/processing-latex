@@ -1,12 +1,8 @@
-add_library('latex')
+add_library("latex")
 
 def setup():
     size(680, 163)
-    generateSVG()
-    tex = loadShape("Example5_shaped.svg")
-    shape(tex, 0, 0)
-    
-def generateSVG():
+  
     latex = "\\begin{array}{|c|l|||r|c|}"
     latex += "\\hline"
     latex += "\\text{Matrix}&\\multicolumn{2}{|c|}{\\text{Multicolumns}}&\\text{Font sizes commands}\\cr"
@@ -16,7 +12,8 @@ def generateSVG():
     latex += "\\multicolumn{4}{|c|}{\\Huge \\text{Huge Multicolumns}}\\cr"
     latex += "\\hline"
     latex += "\\end{array}"
-    print latex
-
-    Convert.toSVG(latex, sketchPath("Example5.svg"), False)
-    Convert.toSVG(latex, sketchPath("Example5_shaped.svg"), True)
+  
+    svg = PTeX.toXML(latex)
+    saveXML(svg, "example.svg")
+    formula = loadShape("example.svg")
+    shape(formula, 0, 0)
