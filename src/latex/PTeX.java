@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
+import processing.core.PApplet;
 import processing.core.PShapeSVG;
 import processing.data.XML;
 
@@ -38,30 +39,64 @@ import org.w3c.dom.Document;
  * @modified    ##date##
  * @version     ##library.prettyVersion## (##library.version##)
  *
+ * @example ColorExample
  * @example PShapeExample
  * @example XMLExample
  */
 public class PTeX {
+	PApplet parent;
+	
+	private static final Color CLEAR = new Color(255, 255, 255, 0);
+	private static final Color BLACK = new Color(0, 0, 0);
+	
+	public PTeX(PApplet parent) {
+		this.parent = parent;
+	}
+	
+	/**
+	 * Convert a LaTeX string to a PShape object.
+	 * 
+	 * @param  latex
+	 * @return rendered formula
+	 */
+    public PShapeSVG toPShape(String latex) {
+    	return toPShape(latex, 20, CLEAR.getRGB(), BLACK.getRGB());
+    }
 
 	/**
 	 * Convert a LaTeX string to a PShape object.
 	 * 
-	 * @param latex
+	 * @param  latex
+	 * @param  textSize
 	 * @return rendered formula
 	 */
-    public static PShapeSVG toPShape(String latex) {
-    	return toPShape(latex, true);
+    public PShapeSVG toPShape(String latex, int textSize) {
+    	return toPShape(latex, textSize, CLEAR.getRGB(), BLACK.getRGB());
+    }
+    
+    /**
+	 * Convert a LaTeX string to a PShape object.
+	 * 
+	 * @param  latex
+	 * @param  textSize
+	 * @param  backgroundColor
+	 * @return rendered formula
+	 */
+    public PShapeSVG toPShape(String latex, int textSize, int backgroundColor) {
+    	return toPShape(latex, textSize, backgroundColor, BLACK.getRGB());
     }
     
     /**
      * Convert a LaTeX string to a PShape object.
      * 
-     * @param latex
-     * @param fontAsShapes
+     * @param  latex
+     * @param  textSize
+     * @param  backgroundColor
+     * @param  textColor
      * @return rendered formula
      */
-    public static PShapeSVG toPShape(String latex, boolean fontAsShapes) {
-        XML xmlOutput  = toXML(latex, fontAsShapes);
+    public PShapeSVG toPShape(String latex, int textSize, int backgroundColor, int textColor) {
+        XML xmlOutput  = toXML(latex, textSize, backgroundColor, textColor);
         PShapeSVG output = new PShapeSVG(xmlOutput);
     	
     	return output;
@@ -70,40 +105,64 @@ public class PTeX {
     /**
      * Convert a LaTeX string to an XML object.
      * 
-     * @param latex
+     * @param  latex
      * @return rendered formula
      */
-    public static XML toXML(String latex) {
-    	return toXML(latex, true);
+    public XML toXML(String latex) {
+    	return toXML(latex, 20, CLEAR.getRGB(), BLACK.getRGB());
     }
     
     /**
      * Convert a LaTeX string to an XML object.
      * 
-     * @param latex
-     * @param fontAsShapes
+     * @param  latex
+     * @param  textSize
      * @return rendered formula
      */
-    public static XML toXML(String latex, boolean fontAsShapes) {
+    public XML toXML(String latex, int textSize) {
+    	return toXML(latex, textSize, CLEAR.getRGB(), BLACK.getRGB());
+    }
+    
+    /**
+     * Convert a LaTeX string to an XML object.
+     * 
+     * @param  latex
+     * @param  textSize
+     * @param  backgroundColor
+     * @return rendered formula
+     */
+    public XML toXML(String latex, int textSize, int backgroundColor) {
+    	return toXML(latex, textSize, backgroundColor, BLACK.getRGB());
+    }
+    
+    /**
+     * Convert a LaTeX string to an XML object.
+     * 
+     * @param  latex
+     * @param  textSize
+     * @param  backgroundColor
+     * @param  textColor
+     * @return rendered formula
+     */
+    public XML toXML(String latex, int textSize, int backgroundColor, int textColor) {
     	DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
         String svgNS = "http://www.w3.org/2000/svg";
         Document document = domImpl.createDocument(svgNS, "svg", null);
         SVGGeneratorContext ctx = SVGGeneratorContext.createDefault(document);
 
-        SVGGraphics2D svgGenerator = new SVGGraphics2D(ctx, fontAsShapes);
+        SVGGraphics2D svgGenerator = new SVGGraphics2D(ctx, true);
 
         DefaultTeXFont.registerAlphabet(new CyrillicRegistration());
         DefaultTeXFont.registerAlphabet(new GreekRegistration());
 
         TeXFormula formula = new TeXFormula(latex);
-        TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, 20);
-        icon.setInsets(new Insets(5, 5, 5, 5));
+        TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, textSize);
         svgGenerator.setSVGCanvasSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-        svgGenerator.setColor(Color.white);
+        svgGenerator.setColor(new Color(backgroundColor, true));
         svgGenerator.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
         
         JLabel jl = new JLabel();
-        jl.setForeground(new Color(0, 0, 0));
+        jl.setForeground(new Color(textColor, true));
         icon.paintIcon(jl, svgGenerator, 0, 0);
         
         boolean useCSS = true;

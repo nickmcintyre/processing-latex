@@ -1,19 +1,13 @@
 add_library("latex")
 
 def setup():
-    size(680, 163)
+    size(640, 360)
+    shapeMode(CENTER)
+
+    tex = PTeX(this)
   
-    latex = "\\begin{array}{|c|l|||r|c|}"
-    latex += "\\hline"
-    latex += "\\text{Matrix}&\\multicolumn{2}{|c|}{\\text{Multicolumns}}&\\text{Font sizes commands}\\cr"
-    latex += "\\hline"
-    latex += "\\begin{pmatrix}\\alpha_{11}&\\cdots&\\alpha_{1n}\\cr\\hdotsfor{3}\\cr\\alpha_{n1}&\\cdots&\\alpha_{nn}\\end{pmatrix}&\\Large \\text{Large Right}&\\small \\text{small Left}&\\tiny \\text{tiny Tiny}\\cr"
-    latex += "\\hline"
-    latex += "\\multicolumn{4}{|c|}{\\Huge \\text{Huge Multicolumns}}\\cr"
-    latex += "\\hline"
-    latex += "\\end{array}"
-  
-    svg = PTeX.toXML(latex)
+    latex = "\\nabla \\rho = 0"
+    svg = tex.toXML(latex)
     saveXML(svg, "example.svg")
     formula = loadShape("example.svg")
-    shape(formula, 0, 0)
+    shape(formula, width * 0.5, height * 0.5)

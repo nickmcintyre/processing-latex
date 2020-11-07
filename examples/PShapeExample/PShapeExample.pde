@@ -1,18 +1,11 @@
 import latex.*;
 
 void setup() {
-  size(680, 163);
-  
-  String latex = "\\begin{array}{|c|l|||r|c|}";
-  latex += "\\hline";
-  latex += "\\text{Matrix}&\\multicolumn{2}{|c|}{\\text{Multicolumns}}&\\text{Font sizes commands}\\cr";
-  latex += "\\hline";
-  latex += "\\begin{pmatrix}\\alpha_{11}&\\cdots&\\alpha_{1n}\\cr\\hdotsfor{3}\\cr\\alpha_{n1}&\\cdots&\\alpha_{nn}\\end{pmatrix}&\\Large \\text{Large Right}&\\small \\text{small Left}&\\tiny \\text{tiny Tiny}\\cr";
-  latex += "\\hline";
-  latex += "\\multicolumn{4}{|c|}{\\Huge \\text{Huge Multicolumns}}\\cr";
-  latex += "\\hline";
-  latex += "\\end{array}";
-  
-  PShape formula = PTeX.toPShape(latex);
-  shape(formula, 0, 0);
+  size(640, 360);
+  shapeMode(CENTER);
+
+  PTeX tex = new PTeX(this);
+
+  PShape formula = tex.toPShape("\\nabla \\rho = 0");
+  shape(formula, width * 0.5, height * 0.5);
 }
