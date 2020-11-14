@@ -3,16 +3,14 @@ add_library("latex")
 def setup():
     size(640, 360)
     shapeMode(CENTER)
-    
-    tex = PTeX(this)
   
-    formula = tex.toPShape("\\nabla \\rho = 0")
+    formula = PTeX.toPShape("\\nabla \\rho = 0")
     shape(formula, 0.25 * width, 0.5 * height)
     
     fontSize = 40
     backgroundColor = color(255, 0, 0)
     textColor = color(255, 120)
-    formula = tex.toPShape("\\nabla \\rho = 0", fontSize, backgroundColor, textColor)
+    formula = PTeX.toPShape("\\nabla \\rho = 0", fontSize, backgroundColor, textColor)
     shape(formula, 0.5 * width, 0.5 * height)
     
     colorbox = "\\colorbox{black}{"
@@ -21,5 +19,5 @@ def setup():
     colorbox += "\\textcolor{blue}{=}"
     colorbox += "\\textcolor{green}{0}"
     colorbox += "}"
-    formula = tex.toPShape(colorbox)
+    formula = PTeX.toPShape(colorbox)
     shape(formula, 0.75 * width, 0.5 * height)

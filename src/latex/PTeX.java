@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
-import processing.core.PApplet;
 import processing.core.PShapeSVG;
 import processing.data.XML;
 
@@ -44,14 +43,9 @@ import org.w3c.dom.Document;
  * @example XMLExample
  */
 public class PTeX {
-	PApplet parent;
 	
 	private static final Color CLEAR = new Color(255, 255, 255, 0);
 	private static final Color BLACK = new Color(0, 0, 0);
-	
-	public PTeX(PApplet parent) {
-		this.parent = parent;
-	}
 	
 	/**
 	 * Convert a LaTeX string to a PShape object.
@@ -59,7 +53,7 @@ public class PTeX {
 	 * @param  latex
 	 * @return rendered formula
 	 */
-    public PShapeSVG toPShape(String latex) {
+    public static PShapeSVG toPShape(String latex) {
     	return toPShape(latex, 20, CLEAR.getRGB(), BLACK.getRGB());
     }
 
@@ -70,7 +64,7 @@ public class PTeX {
 	 * @param  textSize
 	 * @return rendered formula
 	 */
-    public PShapeSVG toPShape(String latex, int textSize) {
+    public static PShapeSVG toPShape(String latex, int textSize) {
     	return toPShape(latex, textSize, CLEAR.getRGB(), BLACK.getRGB());
     }
     
@@ -82,7 +76,7 @@ public class PTeX {
 	 * @param  backgroundColor
 	 * @return rendered formula
 	 */
-    public PShapeSVG toPShape(String latex, int textSize, int backgroundColor) {
+    public static PShapeSVG toPShape(String latex, int textSize, int backgroundColor) {
     	return toPShape(latex, textSize, backgroundColor, BLACK.getRGB());
     }
     
@@ -95,7 +89,7 @@ public class PTeX {
      * @param  textColor
      * @return rendered formula
      */
-    public PShapeSVG toPShape(String latex, int textSize, int backgroundColor, int textColor) {
+    public static PShapeSVG toPShape(String latex, int textSize, int backgroundColor, int textColor) {
         XML xmlOutput  = toXML(latex, textSize, backgroundColor, textColor);
         PShapeSVG output = new PShapeSVG(xmlOutput);
     	
@@ -108,7 +102,7 @@ public class PTeX {
      * @param  latex
      * @return rendered formula
      */
-    public XML toXML(String latex) {
+    public static XML toXML(String latex) {
     	return toXML(latex, 20, CLEAR.getRGB(), BLACK.getRGB());
     }
     
@@ -119,7 +113,7 @@ public class PTeX {
      * @param  textSize
      * @return rendered formula
      */
-    public XML toXML(String latex, int textSize) {
+    public static XML toXML(String latex, int textSize) {
     	return toXML(latex, textSize, CLEAR.getRGB(), BLACK.getRGB());
     }
     
@@ -131,7 +125,7 @@ public class PTeX {
      * @param  backgroundColor
      * @return rendered formula
      */
-    public XML toXML(String latex, int textSize, int backgroundColor) {
+    public static XML toXML(String latex, int textSize, int backgroundColor) {
     	return toXML(latex, textSize, backgroundColor, BLACK.getRGB());
     }
     
@@ -144,7 +138,7 @@ public class PTeX {
      * @param  textColor
      * @return rendered formula
      */
-    public XML toXML(String latex, int textSize, int backgroundColor, int textColor) {
+    public static XML toXML(String latex, int textSize, int backgroundColor, int textColor) {
     	DOMImplementation domImpl = GenericDOMImplementation.getDOMImplementation();
         String svgNS = "http://www.w3.org/2000/svg";
         Document document = domImpl.createDocument(svgNS, "svg", null);
